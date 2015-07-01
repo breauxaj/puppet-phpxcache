@@ -5,10 +5,6 @@ define phpxcache::config (
     /(?i-mx:centos|fedora|redhat|scientific)/ => [ 'php-xcache' ],
   }
 
-  $service = $::operatingsystem ? {
-    /(?i-mx:centos|fedora|redhat|scientific)/ => [ 'httpd' ],
-  }
-
   $key = $title
 
   $context = '/files/etc/php.d/xcache.ini'
@@ -17,7 +13,6 @@ define phpxcache::config (
     context => $context,
     onlyif  => "get ${key} != '${value}'",
     changes => "set ${key} '${value}'",
-    notify  => Service[$service],
     require => Package[$required],
   }
 
